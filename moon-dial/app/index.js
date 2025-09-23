@@ -24,12 +24,15 @@
 
 import * as document from "document";
 import clock from "clock";
+import * as moon from "./lunarcalculator";
 
-var dialgroup = document.getElementById("dialgroup");
+const dialgroup = document.getElementById("dialgroup");
+const phaseLabel = document.getElementById("phaseLabel");
+
 clock.granularity = "seconds"; // TODO change to minutes 
 
 clock.ontick = (evt) => {
-
+    phaseLabel.text =  moon.calculateLunarPhase(); // TODO eventually change to only fire once a day
     rotateImage()
 };
 

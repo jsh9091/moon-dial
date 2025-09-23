@@ -40,6 +40,16 @@
   y: "0";
   width: "336";
   height: "336";
+}
 
+#phaseLabel {
+  x: "50%";
+  y: "30";
+  font-size: 32;
+  font-family: System-Regular;
+  font-weight: regular;
+  text-length: 32;
+  fill: white;
+  text-anchor: middle;
 }
 
