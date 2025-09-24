@@ -28,4 +28,7 @@
     <image id="dial" href="dial.png" x="$-168" y="$-168" width="336" height="336"/> 
     <animateTransform attributeType="rotate" from="0" to="360" begin="click" dur="1" />
   </g>
+
+  <circle cx="20%" cy="328" r="65" fill="red" />
+  <circle cx="80%" cy="328" r="65" fill="red" />
 </svg>
