@@ -91,3 +91,4 @@ lerna-debug.log
 Thumbs.db
 moon-dial/package-lock.json
 
+/moon-dial/build
