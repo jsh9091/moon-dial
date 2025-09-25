@@ -42,7 +42,7 @@ const normalize = value => {
  * @param {*} date 
  * @returns string with phase value
  */
-const getLunarPhase = (date = new Date()) => {
+export const getLunarPhase = (date = new Date()) => {
   const age = getLunarAge(date);
   if (age < 1.84566)
     return newMoon;
@@ -71,14 +71,3 @@ export const isWaning = (date = new Date()) => {
   const age = getLunarAge(date);
   return age > 14.765;
 }
-
-/**
- * Fires calculation for calculating lunar phase. 
- * @returns string with phase value
- */
-export function calculateLunarPhase() {
-  //let date = new Date("2025-04-12"); // debuging code
-
-  return getLunarPhase();
-}
-

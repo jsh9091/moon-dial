@@ -55,7 +55,7 @@ clock.ontick = (evt) => {
 
     updatePhaseLabel();
 
-    phaseLabel.text = moon.calculateLunarPhase(); // TODO eventually change to only fire once a day
+    phaseLabel.text = moon.getLunarPhase(); // TODO eventually change to only fire once a day
     rotateImage()
 };
 
@@ -86,12 +86,12 @@ function rotateImage() {
  * an empty string will be set in label.
  */
 function updatePhaseLabel() {
-    const phase = moon.calculateLunarPhase();
+    const phase = moon.getLunarPhase();
 
-    if (phase === "New Moon") {
+    if (phase === moon.newMoon) {
         moonPaseLabel.text = "New";
 
-    } else if (phase === "Full Moon") {
+    } else if (phase === moon.fullMoon) {
         moonPaseLabel.text = "Full";
 
     } else if ((moon.isWaxing() && moon.isWaning()) 
@@ -109,6 +109,5 @@ function updatePhaseLabel() {
         // should not get here, but if it does, handel it
         moonPaseLabel.text = " ";
     }
-
     moonPaseLabel.text = moonPaseLabel.text.toUpperCase();
 }
