@@ -109,4 +109,6 @@ function updatePhaseLabel() {
         // should not get here, but if it does, handel it
         moonPaseLabel.text = " ";
     }
+
+    moonPaseLabel.text = moonPaseLabel.text.toUpperCase();
 }

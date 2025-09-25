@@ -5,6 +5,15 @@
  * https://jasonsturges.medium.com/moons-lunar-phase-in-javascript-a5219acbfe6e
  */
 
+export const newMoon = "New Moon";
+export const waxingCrescent = "Waxing Crescent";
+export const firstQuarter = "First Quarter";
+export const waxingGibbous = "Waxing Gibbous";
+export const fullMoon = "Full Moon";
+export const waningGibbous = "Waning Gibbous";
+export const lastQuarter = "Last Quarter";
+export const waningCrescent = "Waning Crescent";
+
 const getJulianDate = (date = new Date()) => {
   const time = date.getTime();
   const tzoffset = date.getTimezoneOffset()
@@ -36,22 +45,22 @@ const normalize = value => {
 const getLunarPhase = (date = new Date()) => {
   const age = getLunarAge(date);
   if (age < 1.84566)
-    return "New Moon";
+    return newMoon;
   else if (age < 5.53699)
-    return "Waxing Crescent";
+    return waxingCrescent;
   else if (age < 9.22831)
-    return "First Quarter";
+    return firstQuarter;
   else if (age < 12.91963)
-    return "Waxing Gibbous";
+    return waxingGibbous;
   else if (age < 16.61096)
-    return "Full Moon";
+    return fullMoon;
   else if (age < 20.30228)
-    return "Waning Gibbous";
+    return waningGibbous;
   else if (age < 23.99361)
-    return "Last Quarter";
+    return lastQuarter;
   else if (age < 27.68493)
-    return "Waning Crescent";
-  return "New Moon";
+    return waningCrescent;
+  return newMoon;
 }
 
 export const isWaxing = (date = new Date()) => {
