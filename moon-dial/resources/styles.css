@@ -35,6 +35,16 @@
   fill: black;
 }
 
+#timeLabel {
+  font-size: 80;
+  font-family: FBNucleon-Bold;
+  text-length: 250;
+  text-anchor: middle;
+  x: "50%";
+  y: "45%";
+  fill: white
+}
+
 #dial {
   x: "0%";
   y: "0";

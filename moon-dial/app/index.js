@@ -24,18 +24,50 @@
 
 import * as document from "document";
 import clock from "clock";
+import { preferences, units } from "user-settings";
 import * as moon from "./lunarcalculator";
 
+const timeLabel = document.getElementById("timeLabel");
 const dialgroup = document.getElementById("dialgroup");
 const phaseLabel = document.getElementById("phaseLabel");
 
 clock.granularity = "seconds"; // TODO change to minutes 
 
 clock.ontick = (evt) => {
-    phaseLabel.text =  moon.calculateLunarPhase(); // TODO eventually change to only fire once a day
+    // get time information from API
+    let todayDate = evt.date;
+    const rawHours = todayDate.getHours();
+    let mins = todayDate.getMinutes();
+    let displayMins = zeroPad(mins);
+
+    let hours;
+    if (preferences.clockDisplay === "12h") {
+        // 12 hour format
+        hours = rawHours % 12 || 12;
+    } else {
+        // 24 hour format
+        hours = rawHours;
+    }
+
+    // display time on main clock
+    timeLabel.text = `${hours}` + ":" + `${displayMins}`;
+
+
+    phaseLabel.text = moon.calculateLunarPhase(); // TODO eventually change to only fire once a day
     rotateImage()
 };
 
+/**
+ * Front appends a zero to an integer if less than ten.
+ * @param {*} i 
+ * @returns 
+ */
+function zeroPad(i) {
+    if (i < 10) {
+        i = "0" + i;
+    }
+    return i;
+}
 
 let currentAngle = 0; // Initial angle
 

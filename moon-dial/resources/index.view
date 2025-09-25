@@ -24,7 +24,9 @@
 <svg viewport-fill="black">
   <text id="phaseLabel" />
 
-   <g id="dialgroup" pointer-events="visible" transform="translate(50%, 100%)">
+  <text id="timeLabel" />
+
+  <g id="dialgroup" pointer-events="visible" transform="translate(50%, 100%)">
     <image id="dial" href="dial.png" x="$-168" y="$-168" width="336" height="336"/> 
     <animateTransform attributeType="rotate" from="0" to="360" begin="click" dur="1" />
   </g>
