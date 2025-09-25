@@ -27,10 +27,14 @@ import clock from "clock";
 import { preferences, units } from "user-settings";
 import * as moon from "./lunarcalculator";
 
-const timeLabel = document.getElementById("timeLabel");
-const moonPaseLabel = document.getElementById("moonPaseLabel");
-const dialgroup = document.getElementById("dialgroup");
 const phaseLabel = document.getElementById("phaseLabel"); // TODO remove temporary label
+// Get a handle on the <text> elements
+const moonPaseLabel = document.getElementById("moonPaseLabel");
+const timeLabel = document.getElementById("timeLabel");
+const dayOfWeekLabel = document.getElementById("dayOfWeekLabel");
+const monthLabel = document.getElementById("monthLabel");
+const dayOfMonthLabel = document.getElementById("dayOfMonthLabel");
+const dialgroup = document.getElementById("dialgroup");
 
 clock.granularity = "seconds"; // TODO change to minutes 
 
@@ -53,6 +57,9 @@ clock.ontick = (evt) => {
     // display time on main clock
     timeLabel.text = `${hours}` + ":" + `${displayMins}`;
 
+    updateDayField(evt);
+    updateDateFields(evt);
+
     updatePhaseLabel();
 
     phaseLabel.text = moon.getLunarPhase(); // TODO eventually change to only fire once a day
@@ -71,9 +78,45 @@ function zeroPad(i) {
     return i;
 }
 
-let currentAngle = 0; // Initial angle
+/**
+ * Updates day of week displayed. 
+ * @param {*} evt 
+ */
+function updateDayField(evt) {
+    const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    let index = evt.date.getDay();
+    dayOfWeekLabel.text = dayNames[index].toUpperCase();
+}
 
-function rotateImage() {
+/**
+ * Updates the month and day of month fields.
+ * @param {*} evt 
+ */
+function updateDateFields(evt) {
+  const monthNames = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+
+  let month = monthNames[evt.date.getMonth()];
+  let dayOfMonth = evt.date.getDate();
+
+  monthLabel.text = month.toUpperCase();
+  dayOfMonthLabel.text = dayOfMonth;
+}
+
+let currentAngle = 0; // Initial angle TODO TEMP
+function rotateImage() { // TODO this fuction is a temporary demo stub
     // TODO change to get angle from array
     currentAngle += 5; // Increment angle for rotation
     dialgroup.groupTransform.rotate.angle = currentAngle;

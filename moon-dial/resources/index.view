@@ -22,10 +22,13 @@
   SOFTWARE. -->
 
 <svg viewport-fill="black">
-  <text id="phaseLabel" />
+  <text id="phaseLabel" /> <!--TODO remove temporary label-->
 
-  <text id="timeLabel" />
   <text id="moonPaseLabel" />
+  <text id="timeLabel" />
+  <text id="dayOfWeekLabel" />
+  <text id="monthLabel" />
+  <text id="dayOfMonthLabel" />
 
   <g id="dialgroup" pointer-events="visible" transform="translate(50%, 100%)">
     <image id="dial" href="dial.png" x="$-168" y="$-168" width="336" height="336"/> 
