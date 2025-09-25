@@ -54,11 +54,11 @@ const getLunarPhase = (date = new Date()) => {
   return "New Moon";
 }
 
-const isWaxing = (date = new Date()) => {
+export const isWaxing = (date = new Date()) => {
   const age = getLunarAge(date);
   return age <= 14.765;
 }
-const isWaning = (date = new Date()) => {
+export const isWaning = (date = new Date()) => {
   const age = getLunarAge(date);
   return age > 14.765;
 }

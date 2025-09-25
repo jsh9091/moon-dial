@@ -36,11 +36,21 @@
 }
 
 #timeLabel {
-  font-size: 80;
+  font-size: 75;
   font-family: FBNucleon-Bold;
   text-length: 250;
   text-anchor: middle;
   x: "50%";
+  y: "45%";
+  fill: white
+}
+
+#moonPaseLabel {
+  font-size: 25;
+  font-family: FBNucleon-Bold;
+  text-length: 10;
+  text-anchor: start;
+  x: "0";
   y: "45%";
   fill: white
 }

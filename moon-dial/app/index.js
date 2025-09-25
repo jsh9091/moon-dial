@@ -28,8 +28,9 @@ import { preferences, units } from "user-settings";
 import * as moon from "./lunarcalculator";
 
 const timeLabel = document.getElementById("timeLabel");
+const moonPaseLabel = document.getElementById("moonPaseLabel");
 const dialgroup = document.getElementById("dialgroup");
-const phaseLabel = document.getElementById("phaseLabel");
+const phaseLabel = document.getElementById("phaseLabel"); // TODO remove temporary label
 
 clock.granularity = "seconds"; // TODO change to minutes 
 
@@ -52,6 +53,7 @@ clock.ontick = (evt) => {
     // display time on main clock
     timeLabel.text = `${hours}` + ":" + `${displayMins}`;
 
+    updatePhaseLabel();
 
     phaseLabel.text = moon.calculateLunarPhase(); // TODO eventually change to only fire once a day
     rotateImage()
@@ -75,4 +77,36 @@ function rotateImage() {
     // TODO change to get angle from array
     currentAngle += 5; // Increment angle for rotation
     dialgroup.groupTransform.rotate.angle = currentAngle;
+}
+
+/**
+ * Displays a very short label for moon phase. 
+ * Will display, "New", "Full", "Wax", "Wan", or
+ * if there is an error or unexpected condition 
+ * an empty string will be set in label.
+ */
+function updatePhaseLabel() {
+    const phase = moon.calculateLunarPhase();
+
+    if (phase === "New Moon") {
+        moonPaseLabel.text = "New";
+
+    } else if (phase === "Full Moon") {
+        moonPaseLabel.text = "Full";
+
+    } else if ((moon.isWaxing() && moon.isWaning()) 
+        || (!moon.isWaxing() && !moon.isWaning())) {
+        // guard condition should not happen, but if it does handel it
+        moonPaseLabel.text = " ";
+
+    } else if (moon.isWaxing()) {
+        moonPaseLabel.text = "Wax";
+
+    } else if (moon.isWaning()) {
+        moonPaseLabel.text = "Wan";
+
+    } else {
+        // should not get here, but if it does, handel it
+        moonPaseLabel.text = " ";
+    }
 }
