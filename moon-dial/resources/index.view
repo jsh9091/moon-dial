@@ -22,7 +22,11 @@
   SOFTWARE. -->
 
 <svg viewport-fill="black">
-  <text id="phaseLabel" /> <!--TODO remove temporary label-->
+  <text id="stepCountLabel" />
+  <image id="stepsIcon" href="steps.png" />
+
+  <text id="batteryLabel" />
+  <image id="batteryIcon" href="battery-full.png" />
 
   <image id="moonIcon" />
   <text id="moonPaseLabel" />
@@ -42,5 +46,4 @@
   <!--forground circles for moons on dialog to disapear behind-->
   <circle cx="27%" cy="339" r="53" fill="black" />
   <circle cx="75%" cy="339" r="53" fill="black" />
-
 </svg>

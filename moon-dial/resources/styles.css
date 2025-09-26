@@ -35,6 +35,44 @@
   fill: black;
 }
 
+ #stepCountLabel {
+  font-size: 30;
+  font-family: FBNucleon-Regular;
+  text-length: 80;
+  text-anchor: start;
+  x: 18%;
+  y: 20%;
+  fill: white
+}
+
+#stepsIcon {
+  x: 5%;
+  y: 14%;
+  width: "35";
+  height: "25";
+  fill: white; 
+  opacity: 1;
+}
+
+#batteryLabel {
+  font-size: 30;
+  font-family: FBNucleon-Regular;
+  text-length: 80;
+  text-anchor: end;
+  x: 82%;
+  y: 20%;
+  fill: white
+}
+
+#batteryIcon {
+  x: 84%;
+  y: 14%;
+  width: "35";
+  height: "20";
+  fill: white; 
+  opacity: 1; 
+}
+
 #moonIcon {
   x: "5%";
   y: "28%";
@@ -100,15 +138,3 @@
   width: "336";
   height: "336";
 }
-
-#phaseLabel {
-  x: "50%";
-  y: "30";
-  font-size: 32;
-  font-family: System-Regular;
-  font-weight: regular;
-  text-length: 32;
-  fill: white;
-  text-anchor: middle;
-}
-

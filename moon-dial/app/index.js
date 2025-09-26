@@ -24,11 +24,16 @@
 
 import * as document from "document";
 import clock from "clock";
-import { preferences, units } from "user-settings";
+import { preferences } from "user-settings";
 import * as moon from "./lunarcalculator";
+import { today as activity } from "user-activity";
+import { me as appbit } from "appbit";
+import { battery } from "power";
 
-const phaseLabel = document.getElementById("phaseLabel"); // TODO remove temporary label
 // Get a handle on the <text> elements
+const stepCountLabel = document.getElementById("stepCountLabel");
+const batteryLabel = document.getElementById("batteryLabel");
+const batteryIcon = document.getElementById("batteryIcon");
 const moonIcon = document.getElementById("moonIcon");
 const moonPaseLabel = document.getElementById("moonPaseLabel");
 const timeLabel = document.getElementById("timeLabel");
@@ -58,13 +63,15 @@ clock.ontick = (evt) => {
     // display time on main clock
     timeLabel.text = `${hours}` + ":" + `${displayMins}`;
 
+    displaySteps();
+    updateBattery();
+
     updatePhaseIcon();
     updatePhaseLabel();
 
     updateDayField(evt);
     updateDateFields(evt);
 
-    phaseLabel.text = moon.getLunarPhase(); // TODO eventually change to only fire once a day
     rotateImage()
 };
 
@@ -78,6 +85,76 @@ function zeroPad(i) {
         i = "0" + i;
     }
     return i;
+}
+
+/**
+ * Displays step count on screen. 
+ */
+function displaySteps() {
+      // handle case of user permission for step counts is not there
+  if (appbit.permissions.granted("access_activity")) {
+    stepCountLabel.text = getSteps().formatted;
+  } else {
+    stepCountLabel.text = "-----";
+  }
+}
+
+/**
+ * Gets and formats user step count for the day.
+ * @returns 
+ */
+function getSteps() {
+  let val = activity.adjusted.steps || 0;
+  return {
+    raw: val,
+    formatted:
+      val > 999
+        ? `${Math.floor(val / 1000)},${("00" + (val % 1000)).slice(-3)}`
+        : val,
+  };
+}
+
+/**
+ * Update the displayed battery level. 
+ * @param {*} charger 
+ * @param {*} evt 
+ */
+battery.onchange = (charger, evt) => {
+  updateBattery();
+};
+
+/**
+ * Updates the battery battery icon and label.
+ */
+function updateBattery() {
+  updateBatteryLabel();
+  updateBatteryIcon();
+}
+
+/**
+ * Updates the battery lable GUI for battery percentage. 
+ */
+function updateBatteryLabel() {
+  let percentSign = "&#x25";
+  batteryLabel.text = battery.chargeLevel + percentSign;
+}
+
+/**
+ * Updates what battery icon is displayed. 
+ */
+function updateBatteryIcon() {
+  const minFull = 70;
+  const minHalf = 30;
+  
+  if (battery.charging) {
+    batteryIcon.image = "battery-charging.png"
+  } else if (battery.chargeLevel > minFull) {
+    batteryIcon.image = "battery-full.png"
+  } else if (battery.chargeLevel < minFull && battery.chargeLevel > minHalf) {
+    batteryIcon.image = "battery-half.png"
+  } else if (battery.chargeLevel < minHalf) {
+    batteryIcon.image = "battery-low.png"
+  }
 }
 
 /**
