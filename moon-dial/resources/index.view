@@ -24,6 +24,7 @@
 <svg viewport-fill="black">
   <text id="phaseLabel" /> <!--TODO remove temporary label-->
 
+  <image id="moonIcon" />
   <text id="moonPaseLabel" />
   <text id="timeLabel" />
   <text id="dayOfWeekLabel" />

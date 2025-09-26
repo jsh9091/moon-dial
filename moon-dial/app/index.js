@@ -29,6 +29,7 @@ import * as moon from "./lunarcalculator";
 
 const phaseLabel = document.getElementById("phaseLabel"); // TODO remove temporary label
 // Get a handle on the <text> elements
+const moonIcon = document.getElementById("moonIcon");
 const moonPaseLabel = document.getElementById("moonPaseLabel");
 const timeLabel = document.getElementById("timeLabel");
 const dayOfWeekLabel = document.getElementById("dayOfWeekLabel");
@@ -57,10 +58,11 @@ clock.ontick = (evt) => {
     // display time on main clock
     timeLabel.text = `${hours}` + ":" + `${displayMins}`;
 
+    updatePhaseIcon();
+    updatePhaseLabel();
+
     updateDayField(evt);
     updateDateFields(evt);
-
-    updatePhaseLabel();
 
     phaseLabel.text = moon.getLunarPhase(); // TODO eventually change to only fire once a day
     rotateImage()
@@ -120,6 +122,42 @@ function rotateImage() { // TODO this fuction is a temporary demo stub
     // TODO change to get angle from array
     currentAngle += 5; // Increment angle for rotation
     dialgroup.groupTransform.rotate.angle = currentAngle;
+}
+
+/**
+ * Updates the moon phase icon image. 
+ */
+function updatePhaseIcon() {
+    const phase = moon.getLunarPhase();
+
+    switch (phase) {
+        case moon.newMoon:
+            moonIcon.image = "moon/new-moon.png";
+        break;
+        case moon.waxingCrescent:
+            moonIcon.image = "moon/waxing-cresent.png";
+        break;
+        case moon.firstQuarter:
+            moonIcon.image = "moon/first-quarter.png";
+        break;
+        case moon.waxingGibbous:
+            moonIcon.image = "moon/waxing-gibbous.png";
+        break;
+        case moon.fullMoon:
+            moonIcon.image = "moon/full-moon.png";
+        break;
+        case moon.waningGibbous:
+            moonIcon.image = "moon/waning-gibbous.png";
+        break;
+        case moon.lastQuarter:
+            moonIcon.image = "moon/last-quarter.png";
+        break;
+        case moon.waningCrescent:
+            moonIcon.image = "moon/waning-cresent.png";
+        break;
+        default: 
+            moonIcon.image = "";
+    }
 }
 
 /**
