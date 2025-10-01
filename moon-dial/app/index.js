@@ -42,7 +42,27 @@ const monthLabel = document.getElementById("monthLabel");
 const dayOfMonthLabel = document.getElementById("dayOfMonthLabel");
 const dialgroup = document.getElementById("dialgroup");
 
-clock.granularity = "seconds"; // TODO change to minutes 
+clock.granularity = "minutes";
+
+/* constants for dial angles for new moon phases */
+// angles for ship side of dial
+const DIAL_ANGLE_SHIP_NEW_MOON = 86;
+const DIAL_ANGLE_SHIP_WAXING_CRESENT = 100;
+const DIAL_ANGLE_SHIP_FIRST_QUARTER = 120;
+const DIAL_ANGLE_SHIP_WAXING_GIBBOUS = 145;
+const DIAL_ANGLE_SHIP_FULL_MOON = 175;
+const DIAL_ANGLE_SHIP_WANING_GIBBOUS = 200;
+const DIAL_ANGLE_SHIP_LAST_QUARTER = 230;
+const DIAL_ANGLE_SHIP_WANING_CRESENT = 242;
+// angles for deer side of dial
+const DIAL_ANGLE_DEER_NEW_MOON = 266;
+const DIAL_ANGLE_DEER_WAXING_CRESENT = 280;
+const DIAL_ANGLE_DEER_FIRST_QUARTER = 300;
+const DIAL_ANGLE_DEER_WAXING_GIBBOUS = 325;
+const DIAL_ANGLE_DEER_FULL_MOON = 352;
+const DIAL_ANGLE_DEER_WANING_GIBBOUS = 22;
+const DIAL_ANGLE_DEER_LAST_QUARTER = 52;
+const DIAL_ANGLE_DEER_WANING_CRESENT = 64;
 
 clock.ontick = (evt) => {
     // get time information from API
@@ -72,8 +92,60 @@ clock.ontick = (evt) => {
     updateDayField(evt);
     updateDateFields(evt);
 
-    rotateImage()
+    //demoRotateImage(); // TODO remove
+
+    setDialRotation();
+    //ouputdates(); // TODO remove
 };
+
+function ouputdates() { // TODO REMOVE TEMP
+    console.log(" ");
+    console.log("================================");
+    let myDate = new Date("2025-09-18");
+    console.log(myDate + ": " + moon.getLunarPhase(myDate));
+    myDate = new Date("2025-09-19");
+    console.log(myDate + ": " + moon.getLunarPhase(myDate));
+    myDate = new Date("2025-09-20");
+    console.log(myDate + ": " + moon.getLunarPhase(myDate));
+    myDate = new Date("2025-09-21");
+    console.log(myDate + ": " + moon.getLunarPhase(myDate));
+    myDate = new Date("2025-09-22");
+    console.log(myDate + ": " + moon.getLunarPhase(myDate));
+    myDate = new Date("2025-09-23");
+    console.log(myDate + ": " + moon.getLunarPhase(myDate));
+    myDate = new Date("2025-09-24");
+    console.log(myDate + ": " + moon.getLunarPhase(myDate));
+    myDate = new Date("2025-09-25");
+    console.log(myDate + ": " + moon.getLunarPhase(myDate));
+    myDate = new Date("2025-09-26");
+    console.log(myDate + ": " + moon.getLunarPhase(myDate));
+    myDate = new Date("2025-09-27");
+    console.log(myDate + ": " + moon.getLunarPhase(myDate));
+    myDate = new Date("2025-09-28");
+    console.log(myDate + ": " + moon.getLunarPhase(myDate));
+    myDate = new Date("2025-09-29");
+    console.log(myDate + ": " + moon.getLunarPhase(myDate));
+    myDate = new Date("2025-09-30");
+    console.log(myDate + ": " + moon.getLunarPhase(myDate));
+    myDate = new Date("2025-10-01");
+    console.log(myDate + ": " + moon.getLunarPhase(myDate));
+    myDate = new Date("2025-10-02");
+    console.log(myDate + ": " + moon.getLunarPhase(myDate));
+    myDate = new Date("2025-10-03");
+    console.log(myDate + ": " + moon.getLunarPhase(myDate));
+    myDate = new Date("2025-10-04");
+    console.log(myDate + ": " + moon.getLunarPhase(myDate));
+    myDate = new Date("2025-10-06");
+    console.log(myDate + ": " + moon.getLunarPhase(myDate));
+    myDate = new Date("2025-10-07");
+    console.log(myDate + ": " + moon.getLunarPhase(myDate));
+    myDate = new Date("2025-10-08");
+    console.log(myDate + ": " + moon.getLunarPhase(myDate));
+    myDate = new Date("2025-10-09");
+    console.log(myDate + ": " + moon.getLunarPhase(myDate));
+    myDate = new Date("2025-10-10");
+    console.log(myDate + ": " + moon.getLunarPhase(myDate));
+}
 
 /**
  * Front appends a zero to an integer if less than ten.
@@ -194,13 +266,6 @@ function updateDateFields(evt) {
   dayOfMonthLabel.text = dayOfMonth;
 }
 
-let currentAngle = 0; // Initial angle TODO TEMP
-function rotateImage() { // TODO this fuction is a temporary demo stub
-    // TODO change to get angle from array
-    currentAngle += 5; // Increment angle for rotation
-    dialgroup.groupTransform.rotate.angle = currentAngle;
-}
-
 /**
  * Updates the moon phase icon image. 
  */
@@ -233,6 +298,7 @@ function updatePhaseIcon() {
             moonIcon.image = "moon/waning-cresent.png";
         break;
         default: 
+            // something went wrong
             moonIcon.image = "";
     }
 }
@@ -268,4 +334,47 @@ function updatePhaseLabel() {
         moonPaseLabel.text = " ";
     }
     moonPaseLabel.text = moonPaseLabel.text.toUpperCase();
+}
+
+let currentAngle = 0; // Initial angle TODO TEMP
+function demoRotateImage() { // TODO this fuction is a temporary demo stub
+    // TODO change to get angle from array
+    currentAngle += 5; // Increment angle for rotation
+    dialgroup.groupTransform.rotate.angle = currentAngle;
+}
+
+/**
+ * Sets the dial rotation. 
+ */
+function setDialRotation() { // TODO
+    let newAngle = 0;
+    
+    switch (moon.getLunarPhase()) {
+        case moon.newMoon:
+            newAngle = DIAL_ANGLE_DEER_NEW_MOON;
+            break;
+        case moon.waxingCrescent:
+            newAngle = DIAL_ANGLE_DEER_WAXING_CRESENT;
+            break;
+        case moon.firstQuarter:
+            newAngle = DIAL_ANGLE_DEER_FIRST_QUARTER;
+            break;
+        case moon.waxingGibbous:
+            newAngle = DIAL_ANGLE_DEER_WAXING_GIBBOUS;
+            break;
+        case moon.fullMoon:
+            newAngle = DIAL_ANGLE_DEER_FULL_MOON;
+            break;
+        case moon.waningGibbous:
+            newAngle = DIAL_ANGLE_DEER_WANING_GIBBOUS;
+            break;
+        case moon.lastQuarter:
+            newAngle = DIAL_ANGLE_DEER_LAST_QUARTER;
+            break;
+        case moon.waningCrescent:
+            newAngle = DIAL_ANGLE_DEER_WANING_CRESENT;
+            break;
+    }
+    // update the dial angle
+    dialgroup.groupTransform.rotate.angle = newAngle;
 }
