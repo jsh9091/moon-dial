@@ -65,6 +65,10 @@ const DIAL_ANGLE_DEER_LAST_QUARTER = 52;
 const DIAL_ANGLE_DEER_WANING_CRESENT = 64;
 
 let currentAngle = 0;
+// last phase update fields for dial updates control
+let lastPhaseUpdateDay = 0;
+let lastPhaseUpdateMonth = 0;
+let lastPhaseUpdateYear = 0;
 
 /**
  * Enum to define each side of the dial. 
@@ -314,6 +318,14 @@ function demoRotateImage() { // TODO this fuction is a temporary demo stub
 function setDialRotation(date) {
     let newAngle = 0;
 
+    if (lastPhaseUpdateDay === date.getDate()
+        && lastPhaseUpdateMonth === date.getMonth()
+        && lastPhaseUpdateYear === date.getUTCFullYear()) {
+            dialgroup.groupTransform.rotate.angle = currentAngle;
+            // we already updated the dial angle today, stop
+            return;
+    }
+
     const phase = moon.getLunarPhase(date);
 
     // check if we need to update the current side
@@ -331,10 +343,16 @@ function setDialRotation(date) {
     } else {
         newAngle = calculateDialChangeShipSide(date);
     }
-    // update moon phase for next iteration 
-    currentMoonPhase = phase; 
+
     // update the dial angle
     dialgroup.groupTransform.rotate.angle = newAngle;
+
+    // updates for later
+    currentAngle = newAngle;
+    currentMoonPhase = phase; 
+    lastPhaseUpdateDay = date.getDate();
+    lastPhaseUpdateMonth = date.getMonth(); // DEBUGING NOTE: this field is zero based
+    lastPhaseUpdateYear = date.getUTCFullYear();
 }
 
 /**
