@@ -556,12 +556,25 @@ function incrementAngleShipSide(phase) {
 function incrementAngle(nextPhaseAngle) {
     let newAngle = currentAngle;
 
-    if ((currentAngle + 5) < nextPhaseAngle) {
-        // normal increment 
+    if ((currentAngle + 7) < nextPhaseAngle) {
+        newAngle = newAngle + 7;
+
+    } else if ((currentAngle + 6) < nextPhaseAngle) {
+        newAngle = newAngle + 6;
+
+    } else if ((currentAngle + 5) < nextPhaseAngle) {
         newAngle = newAngle + 5;
 
+    } else if ((currentAngle + 4) < nextPhaseAngle) {
+        newAngle = newAngle + 4;
+
+    } else if ((currentAngle + 3) < nextPhaseAngle) {
+        newAngle = newAngle + 3;
+
+    } else if ((currentAngle + 2) < nextPhaseAngle) {
+        newAngle = newAngle + 2;
+
     } else if ((currentAngle + 1) < nextPhaseAngle) {
-        // small increment 
         newAngle++;
     }
 
