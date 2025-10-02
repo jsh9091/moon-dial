@@ -75,6 +75,7 @@ const DialSide = Object.freeze({
 });
 
 let currentDialSide = DialSide.DEER;
+let currentMoonPhase = moon.newMoon;
 
 clock.ontick = (evt) => {
     // get time information from API
@@ -313,6 +314,37 @@ function demoRotateImage() { // TODO this fuction is a temporary demo stub
 function setDialRotation(date) {
     let newAngle = 0;
 
+    const phase = moon.getLunarPhase(date);
+
+    // check if we need to update the current side
+    if (currentMoonPhase === moon.waningCrescent && phase === moon.newMoon) {
+        // do side update
+        if (currentDialSide === DialSide.DEER) {
+            currentDialSide = DialSide.SHIP;
+        } else {
+            currentDialSide = DialSide.DEER;
+        }
+    }
+
+    if (currentDialSide == DialSide.DEER) {
+        newAngle = calculateDialChangeDeerSide(date);
+    } else {
+        newAngle = calculateDialChangeShipSide(date);
+    }
+    // update moon phase for next iteration 
+    currentMoonPhase = phase; 
+    // update the dial angle
+    dialgroup.groupTransform.rotate.angle = newAngle;
+}
+
+/**
+ * Calculates the angle for display on the deer side of dial. 
+ * @param {*} date 
+ * @returns number - angle for moon dial
+ */
+function calculateDialChangeDeerSide(date) {
+    let newAngle = 0;
+
     switch (moon.getLunarPhase(date)) {
         case moon.newMoon:
             newAngle = DIAL_ANGLE_DEER_NEW_MOON;
@@ -339,6 +371,42 @@ function setDialRotation(date) {
             newAngle = DIAL_ANGLE_DEER_WANING_CRESENT;
             break;
     }
-    // update the dial angle
-    dialgroup.groupTransform.rotate.angle = newAngle;
+    return newAngle;
+}
+
+/**
+ * Calculates the angle for display on the ship side of dial. 
+ * @param {*} date 
+ * @returns number - angle for moon dial
+ */
+function calculateDialChangeShipSide(date) {
+    let newAngle = 0;
+
+    switch (moon.getLunarPhase(date)) {
+        case moon.newMoon:
+            newAngle = DIAL_ANGLE_SHIP_NEW_MOON;
+            break;
+        case moon.waxingCrescent:
+            newAngle = DIAL_ANGLE_SHIP_WAXING_CRESENT;
+            break;
+        case moon.firstQuarter:
+            newAngle = DIAL_ANGLE_SHIP_FIRST_QUARTER;
+            break;
+        case moon.waxingGibbous:
+            newAngle = DIAL_ANGLE_SHIP_WAXING_GIBBOUS;
+            break;
+        case moon.fullMoon:
+            newAngle = DIAL_ANGLE_SHIP_FULL_MOON;
+            break;
+        case moon.waningGibbous:
+            newAngle = DIAL_ANGLE_SHIP_WANING_GIBBOUS;
+            break;
+        case moon.lastQuarter:
+            newAngle = DIAL_ANGLE_SHIP_LAST_QUARTER;
+            break;
+        case moon.waningCrescent:
+            newAngle = DIAL_ANGLE_SHIP_WANING_CRESENT;
+            break;
+    }
+    return newAngle;
 }
