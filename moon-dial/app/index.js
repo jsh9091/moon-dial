@@ -493,7 +493,8 @@ function incrementAngleDeerSide(phase) {
             newAngle = incrementAngle(DIAL_ANGLE_DEER_FULL_MOON);
             break;
         case moon.fullMoon:
-            newAngle = incrementAngle(DIAL_ANGLE_DEER_WANING_GIBBOUS);
+            // special case due to circle's min/max values in this side/phase
+            newAngle = incrementAngle((360 + DIAL_ANGLE_DEER_WANING_GIBBOUS));
             break;
         case moon.waningGibbous:
             newAngle = incrementAngle(DIAL_ANGLE_DEER_LAST_QUARTER);
@@ -502,7 +503,7 @@ function incrementAngleDeerSide(phase) {
             newAngle = incrementAngle(DIAL_ANGLE_DEER_WANING_CRESENT);
             break;
         case moon.waningCrescent:
-            // next phase is new moon, but next phase value would be invailed due to side change
+            // next phase is new moon, but next phase value would be invalid due to side change
             newAngle = incrementAngle(Number.MAX_VALUE);
             break;
     }
@@ -540,7 +541,7 @@ function incrementAngleShipSide(phase) {
             newAngle = incrementAngle(DIAL_ANGLE_SHIP_WANING_CRESENT);
             break;
         case moon.waningCrescent:
-            // next phase is new moon, but next phase value would be invailed due to side change
+            // next phase is new moon, but next phase value would be invalid due to side change
             newAngle = incrementAngle(Number.MAX_VALUE);
             break;
     }
@@ -564,14 +565,14 @@ function incrementAngle(nextPhaseAngle) {
         newAngle++;
     }
 
-    // min & max values of circle happen durring full moon on ship side of dial
-    if (currentDialSide === DialSide.SHIP && currentMoonPhase === moon.fullMoon) {
+    // min & max values of circle happen durring full moon on deer side of dial
+    if (currentDialSide === DialSide.DEER && currentMoonPhase === moon.fullMoon) {
         // we require special logic in this condition due to 
         // max and min values of circle angles hit here.
         if (newAngle > 360) {
             newAngle = newAngle - 360;
         }
     }
-    
+
     return newAngle;
 }
