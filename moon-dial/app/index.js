@@ -64,6 +64,18 @@ const DIAL_ANGLE_DEER_WANING_GIBBOUS = 22;
 const DIAL_ANGLE_DEER_LAST_QUARTER = 52;
 const DIAL_ANGLE_DEER_WANING_CRESENT = 64;
 
+let currentAngle = 0;
+
+/**
+ * Enum to define each side of the dial. 
+ */
+const DialSide = Object.freeze({
+  SHIP: 'ship',
+  DEER: 'deer'
+});
+
+let currentDialSide = DialSide.DEER;
+
 clock.ontick = (evt) => {
     // get time information from API
     let todayDate = evt.date;
@@ -86,66 +98,15 @@ clock.ontick = (evt) => {
     displaySteps();
     updateBattery();
 
-    updatePhaseIcon();
-    updatePhaseLabel();
+    updatePhaseIcon(todayDate);
+    updatePhaseLabel(todayDate);
 
     updateDayField(evt);
     updateDateFields(evt);
 
     //demoRotateImage(); // TODO remove
-
-    setDialRotation();
-    //ouputdates(); // TODO remove
+    setDialRotation(todayDate);
 };
-
-function ouputdates() { // TODO REMOVE TEMP
-    console.log(" ");
-    console.log("================================");
-    let myDate = new Date("2025-09-18");
-    console.log(myDate + ": " + moon.getLunarPhase(myDate));
-    myDate = new Date("2025-09-19");
-    console.log(myDate + ": " + moon.getLunarPhase(myDate));
-    myDate = new Date("2025-09-20");
-    console.log(myDate + ": " + moon.getLunarPhase(myDate));
-    myDate = new Date("2025-09-21");
-    console.log(myDate + ": " + moon.getLunarPhase(myDate));
-    myDate = new Date("2025-09-22");
-    console.log(myDate + ": " + moon.getLunarPhase(myDate));
-    myDate = new Date("2025-09-23");
-    console.log(myDate + ": " + moon.getLunarPhase(myDate));
-    myDate = new Date("2025-09-24");
-    console.log(myDate + ": " + moon.getLunarPhase(myDate));
-    myDate = new Date("2025-09-25");
-    console.log(myDate + ": " + moon.getLunarPhase(myDate));
-    myDate = new Date("2025-09-26");
-    console.log(myDate + ": " + moon.getLunarPhase(myDate));
-    myDate = new Date("2025-09-27");
-    console.log(myDate + ": " + moon.getLunarPhase(myDate));
-    myDate = new Date("2025-09-28");
-    console.log(myDate + ": " + moon.getLunarPhase(myDate));
-    myDate = new Date("2025-09-29");
-    console.log(myDate + ": " + moon.getLunarPhase(myDate));
-    myDate = new Date("2025-09-30");
-    console.log(myDate + ": " + moon.getLunarPhase(myDate));
-    myDate = new Date("2025-10-01");
-    console.log(myDate + ": " + moon.getLunarPhase(myDate));
-    myDate = new Date("2025-10-02");
-    console.log(myDate + ": " + moon.getLunarPhase(myDate));
-    myDate = new Date("2025-10-03");
-    console.log(myDate + ": " + moon.getLunarPhase(myDate));
-    myDate = new Date("2025-10-04");
-    console.log(myDate + ": " + moon.getLunarPhase(myDate));
-    myDate = new Date("2025-10-06");
-    console.log(myDate + ": " + moon.getLunarPhase(myDate));
-    myDate = new Date("2025-10-07");
-    console.log(myDate + ": " + moon.getLunarPhase(myDate));
-    myDate = new Date("2025-10-08");
-    console.log(myDate + ": " + moon.getLunarPhase(myDate));
-    myDate = new Date("2025-10-09");
-    console.log(myDate + ": " + moon.getLunarPhase(myDate));
-    myDate = new Date("2025-10-10");
-    console.log(myDate + ": " + moon.getLunarPhase(myDate));
-}
 
 /**
  * Front appends a zero to an integer if less than ten.
@@ -268,9 +229,10 @@ function updateDateFields(evt) {
 
 /**
  * Updates the moon phase icon image. 
+ * @param {*} date 
  */
-function updatePhaseIcon() {
-    const phase = moon.getLunarPhase();
+function updatePhaseIcon(date) {
+    const phase = moon.getLunarPhase(date);
 
     switch (phase) {
         case moon.newMoon:
@@ -308,9 +270,10 @@ function updatePhaseIcon() {
  * Will display, "New", "Full", "Wax", "Wan", or
  * if there is an error or unexpected condition 
  * an empty string will be set in label.
+ * @param {*} date 
  */
-function updatePhaseLabel() {
-    const phase = moon.getLunarPhase();
+function updatePhaseLabel(date) {
+    const phase = moon.getLunarPhase(date);
 
     if (phase === moon.newMoon) {
         moonPaseLabel.text = "New";
@@ -318,15 +281,15 @@ function updatePhaseLabel() {
     } else if (phase === moon.fullMoon) {
         moonPaseLabel.text = "Full";
 
-    } else if ((moon.isWaxing() && moon.isWaning()) 
-        || (!moon.isWaxing() && !moon.isWaning())) {
+    } else if ((moon.isWaxing(date) && moon.isWaning(date)) 
+        || (!moon.isWaxing(date) && !moon.isWaning(date))) {
         // guard condition should not happen, but if it does handel it
         moonPaseLabel.text = " ";
 
-    } else if (moon.isWaxing()) {
+    } else if (moon.isWaxing(date)) {
         moonPaseLabel.text = "Wax";
 
-    } else if (moon.isWaning()) {
+    } else if (moon.isWaning(date)) {
         moonPaseLabel.text = "Wan";
 
     } else {
@@ -336,7 +299,7 @@ function updatePhaseLabel() {
     moonPaseLabel.text = moonPaseLabel.text.toUpperCase();
 }
 
-let currentAngle = 0; // Initial angle TODO TEMP
+//let currentAngle = 0; // Initial angle TODO TEMP
 function demoRotateImage() { // TODO this fuction is a temporary demo stub
     // TODO change to get angle from array
     currentAngle += 5; // Increment angle for rotation
@@ -345,11 +308,12 @@ function demoRotateImage() { // TODO this fuction is a temporary demo stub
 
 /**
  * Sets the dial rotation. 
+ * @param {*} date 
  */
-function setDialRotation() { // TODO
+function setDialRotation(date) {
     let newAngle = 0;
-    
-    switch (moon.getLunarPhase()) {
+
+    switch (moon.getLunarPhase(date)) {
         case moon.newMoon:
             newAngle = DIAL_ANGLE_DEER_NEW_MOON;
             break;
