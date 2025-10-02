@@ -75,19 +75,19 @@
 
 #moonIcon {
   x: "5%";
-  y: "28%";
-  width: "25";
-  height: "25";
+  y: "29%";
+  width: "27";
+  height: "27";
   fill: white; 
   opacity: 1;
 }
 
 #moonPaseLabel {
-  font-size: 23;
+  font-size: 20;
   font-family: FBNucleon-Bold;
   text-length: 10;
-  text-anchor: start;
-  x: "0";
+  text-anchor: middle;
+  x: "28";
   y: "45%";
   fill: white
 }
