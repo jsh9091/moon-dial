@@ -42,6 +42,7 @@ const monthLabel = document.getElementById("monthLabel");
 const dayOfMonthLabel = document.getElementById("dayOfMonthLabel");
 const dialgroup = document.getElementById("dialgroup");
 
+// Update the clock every second
 clock.granularity = "minutes";
 
 /* constants for dial angles for new moon phases */
