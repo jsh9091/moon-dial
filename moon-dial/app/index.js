@@ -98,7 +98,6 @@ clock.ontick = (evt) => {
     updateDayField(evt);
     updateDateFields(evt);
 
-    //demoRotateImage(); // TODO remove
     setDialRotation(todayDate);
 };
 
@@ -323,13 +322,6 @@ function updatePhaseLabel(date) {
         moonPaseLabel.text = " ";
     }
     moonPaseLabel.text = moonPaseLabel.text.toUpperCase();
-}
-
-//let currentAngle = 0; // Initial angle TODO TEMP
-function demoRotateImage() { // TODO this fuction is a temporary demo stub
-    // TODO change to get angle from array
-    currentAngle += 5; // Increment angle for rotation
-    dialgroup.groupTransform.rotate.angle = currentAngle;
 }
 
 /**
