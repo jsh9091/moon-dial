@@ -74,7 +74,7 @@
 }
 
 #moonIcon {
-  x: "6%";
+  x: "8%";
   y: "29%";
   width: "27";
   height: "27";
@@ -87,7 +87,7 @@
   font-family: FBNucleon-Bold;
   text-length: 10;
   text-anchor: middle;
-  x: "33";
+  x: "40";
   y: "45%";
   fill: white
 }
@@ -107,7 +107,7 @@
   font-family: FBNucleon-Bold;
   text-length: 10;
   text-anchor: middle;
-  x: "90%";
+  x: "88%";
   y: "31%";
   fill: white
 }
@@ -117,7 +117,7 @@
   font-family: FBNucleon-Bold;
   text-length: 10;
   text-anchor: middle;
-  x: "90%";
+  x: "88%";
   y: "38%";
   fill: white
 }
@@ -127,7 +127,7 @@
   font-family: FBNucleon-Bold;
   text-length: 10;
   text-anchor: middle;
-  x: "90%";
+  x: "88%";
   y: "45%";
   fill: white
 }
