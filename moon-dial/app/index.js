@@ -95,8 +95,8 @@ clock.ontick = (evt) => {
 
     timeDisplay(todayDate);
 
-    updateDayField(evt);
-    updateDateFields(evt);
+    updateDayField(todayDate);
+    updateDateFields(todayDate);
 
     setDialRotation(todayDate);
 };
@@ -217,19 +217,19 @@ function updateBatteryIcon() {
 
 /**
  * Updates day of week displayed. 
- * @param {*} evt 
+ * @param {*} todayDate 
  */
-function updateDayField(evt) {
+function updateDayField(todayDate) {
     const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-    let index = evt.date.getDay();
+    let index = todayDate.getDay();
     dayOfWeekLabel.text = dayNames[index].toUpperCase();
 }
 
 /**
  * Updates the month and day of month fields.
- * @param {*} evt 
+ * @param {*} todayDate 
  */
-function updateDateFields(evt) {
+function updateDateFields(todayDate) {
   const monthNames = [
     "Jan",
     "Feb",
@@ -245,8 +245,8 @@ function updateDateFields(evt) {
     "Dec",
   ];
 
-  let month = monthNames[evt.date.getMonth()];
-  let dayOfMonth = evt.date.getDate();
+  let month = monthNames[todayDate.getMonth()];
+  let dayOfMonth = todayDate.getDate();
 
   monthLabel.text = month.toUpperCase();
   dayOfMonthLabel.text = dayOfMonth;
