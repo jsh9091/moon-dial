@@ -308,7 +308,7 @@ function updatePhaseLabel(date) {
 
     } else if ((moon.isWaxing(date) && moon.isWaning(date)) 
         || (!moon.isWaxing(date) && !moon.isWaning(date))) {
-        // guard condition should not happen, but if it does handel it
+        // guard condition should not happen, but if it does handle it
         moonPaseLabel.text = " ";
 
     } else if (moon.isWaxing(date)) {
@@ -318,7 +318,7 @@ function updatePhaseLabel(date) {
         moonPaseLabel.text = "Wan";
 
     } else {
-        // should not get here, but if it does, handel it
+        // should not get here, but if it does, handle it
         moonPaseLabel.text = " ";
     }
     moonPaseLabel.text = moonPaseLabel.text.toUpperCase();
