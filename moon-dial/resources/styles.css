@@ -29,7 +29,7 @@
   text-anchor: start;
   x: "66";
   y: "67";
-  fill: white
+  fill: #D4F1F4
 }
 
 #stepsIcon {
@@ -37,7 +37,7 @@
   y: "45";
   width: "35";
   height: "25";
-  fill: white; 
+  fill: #D4F1F4; 
   opacity: 1;
 }
 
@@ -48,7 +48,7 @@
   text-anchor: end;
   x: "266";
   y: "67";
-  fill: white
+  fill: #D4F1F4
 }
 
 #batteryIcon {
@@ -56,7 +56,7 @@
   y: 14%;
   width: "35";
   height: "20";
-  fill: white; 
+  fill: #D4F1F4; 
   opacity: 1; 
 }
 
@@ -65,7 +65,7 @@
   y: "29%";
   width: "27";
   height: "27";
-  fill: white; 
+  fill: #D4F1F4; 
   opacity: 1;
 }
 
@@ -76,17 +76,27 @@
   text-anchor: middle;
   x: "40";
   y: "45%";
-  fill: white
+  fill: #D4F1F4
 }
 
 #timeLabel {
-  font-size: 75;
+  font-size: 70;
   font-family: FBNucleon-Bold;
   text-length: 250;
   text-anchor: middle;
   x: "50%";
   y: "45%";
   fill: white
+}
+
+#timeShadow {
+  font-size: 70;
+  font-family: FBNucleon-Bold;
+  text-length: 250;
+  text-anchor: middle;
+  x: "50%+5";
+  y: "45%+5";
+  fill: black
 }
 
 #dayOfWeekLabel {
@@ -96,7 +106,7 @@
   text-anchor: middle;
   x: "88%";
   y: "31%";
-  fill: white
+  fill: #D4F1F4
 }
 
 #monthLabel {
@@ -106,7 +116,7 @@
   text-anchor: middle;
   x: "88%";
   y: "38%";
-  fill: white
+  fill: #D4F1F4
 }
 
 #dayOfMonthLabel {
@@ -116,7 +126,7 @@
   text-anchor: middle;
   x: "88%";
   y: "45%";
-  fill: white
+  fill: #D4F1F4
 }
 
 #dial {

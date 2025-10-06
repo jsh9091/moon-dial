@@ -49,7 +49,10 @@
 
   <image id="moonIcon" />
   <text id="moonPaseLabel" />
+
+  <text id="timeShadow" opacity="1.0" />
   <text id="timeLabel" />
+  
   <text id="dayOfWeekLabel" />
   <text id="monthLabel" />
   <text id="dayOfMonthLabel" />

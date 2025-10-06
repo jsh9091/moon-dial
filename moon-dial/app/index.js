@@ -37,6 +37,7 @@ const batteryIcon = document.getElementById("batteryIcon");
 const moonIcon = document.getElementById("moonIcon");
 const moonPaseLabel = document.getElementById("moonPaseLabel");
 const timeLabel = document.getElementById("timeLabel");
+const timeShadow = document.getElementById("timeShadow");
 const dayOfWeekLabel = document.getElementById("dayOfWeekLabel");
 const monthLabel = document.getElementById("monthLabel");
 const dayOfMonthLabel = document.getElementById("dayOfMonthLabel");
@@ -85,6 +86,27 @@ let currentMoonPhase = moon.newMoon;
 clock.ontick = (evt) => {
     // get time information from API
     let todayDate = evt.date;
+
+    displaySteps();
+    updateBattery();
+
+    updatePhaseIcon(todayDate);
+    updatePhaseLabel(todayDate);
+
+    timeDisplay(todayDate);
+
+    updateDayField(evt);
+    updateDateFields(evt);
+
+    //demoRotateImage(); // TODO remove
+    setDialRotation(todayDate);
+};
+
+/**
+ * Operations for displaying time on clockface. 
+ * @param {*} todayDate 
+ */
+function timeDisplay(todayDate) {
     const rawHours = todayDate.getHours();
     let mins = todayDate.getMinutes();
     let displayMins = zeroPad(mins);
@@ -100,19 +122,17 @@ clock.ontick = (evt) => {
 
     // display time on main clock
     timeLabel.text = `${hours}` + ":" + `${displayMins}`;
+    timeShadow.text = timeLabel.text;
 
-    displaySteps();
-    updateBattery();
-
-    updatePhaseIcon(todayDate);
-    updatePhaseLabel(todayDate);
-
-    updateDayField(evt);
-    updateDateFields(evt);
-
-    //demoRotateImage(); // TODO remove
-    setDialRotation(todayDate);
-};
+    if (preferences.clockDisplay === "12h") {
+        timeLabel.style.fontSize = 70;
+        timeShadow.style.fontSize = 70;
+    } else {
+        // horizontal space is limited for 24hr time, so reduce font size a little
+        timeLabel.style.fontSize = 65;
+        timeShadow.style.fontSize = 65;
+    }
+}
 
 /**
  * Front appends a zero to an integer if less than ten.
