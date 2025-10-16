@@ -124,12 +124,12 @@ function timeDisplay(todayDate) {
     timeShadow.text = timeLabel.text;
 
     if (preferences.clockDisplay === "12h") {
-        timeLabel.style.fontSize = 70;
-        timeShadow.style.fontSize = 70;
-    } else {
-        // horizontal space is limited for 24hr time, so reduce font size a little
         timeLabel.style.fontSize = 65;
         timeShadow.style.fontSize = 65;
+    } else {
+        // horizontal space is limited for 24hr time, so reduce font size a little
+        timeLabel.style.fontSize = 58;
+        timeShadow.style.fontSize = 58;
     }
 }
 
