@@ -1,0 +1,137 @@
+/*
+ * MIT License
+ *
+ * Copyright (c) 2025 Joshua Horvath
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
+ #stepCountLabel {
+  font-size: 30;
+  font-family: FBNucleon-Regular;
+  text-length: 80;
+  text-anchor: start;
+  x: "66";
+  y: "67";
+  fill: #D4F1F4
+}
+
+#stepsIcon {
+  x: "22";
+  y: "45";
+  width: "35";
+  height: "25";
+  fill: #D4F1F4; 
+  opacity: 1;
+}
+
+#batteryLabel {
+  font-size: 30;
+  font-family: FBNucleon-Regular;
+  text-length: 80;
+  text-anchor: end;
+  x: "266";
+  y: "67";
+  fill: #D4F1F4
+}
+
+#batteryIcon {
+  x: 82%;
+  y: 14%;
+  width: "35";
+  height: "20";
+  fill: #D4F1F4; 
+  opacity: 1; 
+}
+
+#moonIcon {
+  x: "8%";
+  y: "29%";
+  width: "27";
+  height: "27";
+  fill: #D4F1F4; 
+  opacity: 1;
+}
+
+#moonPaseLabel {
+  font-size: 20;
+  font-family: FBNucleon-Bold;
+  text-length: 10;
+  text-anchor: middle;
+  x: "40";
+  y: "45%";
+  fill: #D4F1F4
+}
+
+#timeLabel {
+  font-size: 70;
+  font-family: FBNucleon-Bold;
+  text-length: 250;
+  text-anchor: middle;
+  x: "50%";
+  y: "45%";
+  fill: white
+}
+
+#timeShadow {
+  font-size: 70;
+  font-family: FBNucleon-Bold;
+  text-length: 250;
+  text-anchor: middle;
+  x: "50%+5";
+  y: "45%+5";
+  fill: black
+}
+
+#dayOfWeekLabel {
+  font-size: 20;
+  font-family: FBNucleon-Bold;
+  text-length: 10;
+  text-anchor: middle;
+  x: "88%";
+  y: "31%";
+  fill: #D4F1F4
+}
+
+#monthLabel {
+  font-size: 20;
+  font-family: FBNucleon-Bold;
+  text-length: 10;
+  text-anchor: middle;
+  x: "88%";
+  y: "38%";
+  fill: #D4F1F4
+}
+
+#dayOfMonthLabel {
+  font-size: 20;
+  font-family: FBNucleon-Bold;
+  text-length: 10;
+  text-anchor: middle;
+  x: "88%";
+  y: "45%";
+  fill: #D4F1F4
+}
+
+#dial {
+  x: "0%";
+  y: "0";
+  width: "336";
+  height: "336";
+}
