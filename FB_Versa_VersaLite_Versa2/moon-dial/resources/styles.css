@@ -27,14 +27,14 @@
   font-family: FBNucleon-Regular;
   text-length: 80;
   text-anchor: start;
-  x: "66";
-  y: "67";
+  x: "56";
+  y: "40";
   fill: #D4F1F4
 }
 
 #stepsIcon {
-  x: "22";
-  y: "45";
+  x: "10";
+  y: "17";
   width: "35";
   height: "25";
   fill: #D4F1F4; 
@@ -46,16 +46,16 @@
   font-family: FBNucleon-Regular;
   text-length: 80;
   text-anchor: end;
-  x: "266";
-  y: "67";
+  x: "247";
+  y: "40";
   fill: #D4F1F4
 }
 
 #batteryIcon {
-  x: 82%;
-  y: 14%;
+  x: "255";
+  y: "17";
   width: "35";
-  height: "20";
+  height: "24";
   fill: #D4F1F4; 
   opacity: 1; 
 }
