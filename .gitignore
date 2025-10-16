@@ -89,6 +89,7 @@ lerna-debug.log
 # System Files
 .DS_Store
 Thumbs.db
-moon-dial/package-lock.json
 
-/moon-dial/build
+FB_Versa3_Sense/moon-dial/package-lock.json
+FB_Versa3_Sense/moon-dial/build
+FB_Versa3_Sense/moon-dial/node_modules
