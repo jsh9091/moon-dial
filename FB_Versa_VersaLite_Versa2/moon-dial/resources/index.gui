@@ -22,8 +22,9 @@
   SOFTWARE. -->
 
 <svg>
+  <rect id="background" />
 
-  <gradientRect x="0" y="0" width="100%" height="100"
+  <gradientRect x="0" y="20" width="100%" height="80"
     gradient-type="linear"
     gradient-x1="0" gradient-y1="0"
     gradient-x2="0" gradient-y2="100%"
