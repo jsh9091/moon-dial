@@ -1,0 +1,30 @@
+{
+  "name": "moon-dial",
+  "version": "0.1.0",
+  "private": true,
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "@fitbit/sdk": "^6.2.0-pre.1",
+    "@fitbit/sdk-cli": "^1.7.3"
+  },
+  "fitbit": {
+    "appUUID": "cfd9e97a-91a1-45ee-b13d-edc692b1df5c",
+    "appType": "clockface",
+    "appDisplayName": "Moon Dial",
+    "iconFile": "resources/icon.png",
+    "wipeColor": "#ffffff",
+    "requestedPermissions": [
+      "access_activity"
+    ],
+    "buildTargets": [
+      "hera",
+      "rhea"
+    ],
+    "i18n": {},
+    "defaultLanguage": "en-US"
+  },
+  "scripts": {
+    "build": "fitbit-build",
+    "debug": "fitbit"
+  }
+}

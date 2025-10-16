@@ -1,0 +1,82 @@
+<!--
+  MIT License
+
+  Copyright (c) 2025 Joshua Horvath
+  
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+ 
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+ 
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE. -->
+
+<svg>
+
+  <gradientRect x="0" y="0" width="100%" height="68"
+    gradient-type="linear"
+    gradient-x1="0" gradient-y1="0"
+    gradient-x2="0" gradient-y2="100%"
+    gradient-color1="black" gradient-color2="#003161" />
+
+  <gradientRect x="0" y="68" width="100%" height="100"
+    gradient-type="linear"
+    gradient-x1="0" gradient-y1="50%"
+    gradient-x2="0" gradient-y2="100%"
+    gradient-color1="#003161" gradient-color2="#000B58" />
+
+  <gradientRect x="0" y="168" width="100%" height="168"
+    gradient-type="linear"
+    gradient-x1="0" gradient-y1="0"
+    gradient-x2="0" gradient-y2="100%"
+    gradient-color1="#000B58" gradient-color2="black" />
+
+  <text id="stepCountLabel" />
+  <image id="stepsIcon" href="steps.png" />
+
+  <text id="batteryLabel" />
+  <image id="batteryIcon" href="battery-full.png" />
+
+  <image id="moonIcon" />
+  <text id="moonPaseLabel" />
+
+  <text id="timeShadow" opacity="1.0" />
+  <text id="timeLabel" />
+  
+  <text id="dayOfWeekLabel" />
+  <text id="monthLabel" />
+  <text id="dayOfMonthLabel" />
+
+  <g id="dialgroup" pointer-events="visible" transform="translate(50%, 100%)">
+    <image id="dial" href="dial.png" x="$-168" y="$-168" width="336" height="336"/> 
+    <animateTransform attributeType="rotate" from="0" to="360" begin="click" dur="1" />
+  </g>
+
+  <!--drop shawdow for circles that moon disapears behind on dial-->
+  <circle cx="29%" cy="343" r="53" fill="black" />
+  <circle cx="73%" cy="343" r="53" fill="black" />
+  <!--forground circles for moons on dialog to disapear behind-->
+  <mask id="mask">
+    <!--circles to be displayed-->
+    <circle cx="27%" cy="339" r="53" />
+    <circle cx="75%" cy="339" r="53" />
+  </mask>
+    <!--gradient to be masked off by circles-->
+   <svg mask="#mask" width="100%" height="100%">
+      <gradientRect  x="0" y="285" width="100%" height="51"
+        gradient-type="linear"
+        gradient-x1="0" gradient-y1="0"
+        gradient-x2="0" gradient-y2="95%"
+        gradient-color1="#003161" gradient-color2="black" />
+  </svg>
+</svg>
