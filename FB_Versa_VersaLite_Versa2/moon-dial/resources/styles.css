@@ -34,13 +34,13 @@
   text-length: 80;
   text-anchor: start;
   x: "56";
-  y: "35";
+  y: "45";
   fill: #D4F1F4
 }
 
 #stepsIcon {
   x: "10";
-  y: "12";
+  y: "23";
   width: "35";
   height: "25";
   fill: #D4F1F4; 
@@ -53,13 +53,13 @@
   text-length: 80;
   text-anchor: end;
   x: "247";
-  y: "35";
+  y: "45";
   fill: #D4F1F4
 }
 
 #batteryIcon {
   x: "255";
-  y: "12";
+  y: "23";
   width: "35";
   height: "24";
   fill: #D4F1F4; 
@@ -68,7 +68,7 @@
 
 #moonIcon {
   x: "21";
-  y: "84";
+  y: "90";
   width: "25";
   height: "25";
   fill: #D4F1F4; 
@@ -81,7 +81,7 @@
   text-length: 10;
   text-anchor: middle;
   x: "35";
-  y: "135";
+  y: "47%";
   fill: #D4F1F4
 }
 
@@ -91,7 +91,7 @@
   text-length: 250;
   text-anchor: middle;
   x: "50%";
-  y: "45%";
+  y: "47%";
   fill: white
 }
 
@@ -101,7 +101,7 @@
   text-length: 250;
   text-anchor: middle;
   x: "50%+5";
-  y: "45%+5";
+  y: "47%+5";
   fill: black
 }
 
@@ -111,7 +111,7 @@
   text-length: 10;
   text-anchor: middle;
   x: "268";
-  y: "31%";
+  y: "33%";
   fill: #D4F1F4
 }
 
@@ -121,7 +121,7 @@
   text-length: 10;
   text-anchor: middle;
   x: "268";
-  y: "38%";
+  y: "40%";
   fill: #D4F1F4
 }
 
@@ -131,7 +131,7 @@
   text-length: 10;
   text-anchor: middle;
   x: "268";
-  y: "45%";
+  y: "47%";
   fill: #D4F1F4
 }
 
