@@ -27,19 +27,19 @@
   <gradientRect x="0" y="20" width="100%" height="120"
     gradient-type="linear"
     gradient-x1="0" gradient-y1="0"
-    gradient-x2="0" gradient-y2="100%"
+    gradient-x2="0" gradient-y2="120"
     gradient-color1="black" gradient-color2="#003161" />
 
   <gradientRect x="0" y="140" width="100%" height="80"
     gradient-type="linear"
-    gradient-x1="0" gradient-y1="50%"
-    gradient-x2="0" gradient-y2="100%"
+    gradient-x1="0" gradient-y1="0"
+    gradient-x2="0" gradient-y2="80"
     gradient-color1="#003161" gradient-color2="#000B58" />
 
   <gradientRect x="0" y="200" width="100%" height="40"
     gradient-type="linear"
     gradient-x1="0" gradient-y1="0"
-    gradient-x2="0" gradient-y2="100%"
+    gradient-x2="0" gradient-y2="40"
     gradient-color1="#000B58" gradient-color2="black" />
 
   <text id="stepCountLabel" />
@@ -72,7 +72,7 @@
       <gradientRect  x="0" y="249" width="100%" height="51"
         gradient-type="linear"
         gradient-x1="0" gradient-y1="0"
-        gradient-x2="0" gradient-y2="95%"
+        gradient-x2="0" gradient-y2="40"
         gradient-color1="#003161" gradient-color2="black" />
   </svg>
 </svg>
