@@ -68,7 +68,7 @@
 
 #moonIcon {
   x: "21+12";
-  y: "85";
+  y: "87";
   width: "25";
   height: "25";
   fill: #D4F1F4; 
@@ -81,7 +81,7 @@
   text-length: 10;
   text-anchor: middle;
   x: "35+12";
-  y: "47%";
+  y: "48%";
   fill: #D4F1F4
 }
 
@@ -91,7 +91,7 @@
   text-length: 14;
   text-anchor: middle;
   x: "60%";
-  y: "26%";
+  y: "27%";
   fill: #D4F1F4
 }
 
@@ -101,7 +101,7 @@
   text-length: 250;
   text-anchor: middle;
   x: "60%";
-  y: "47%";
+  y: "48%";
   fill: white
 }
 
@@ -111,7 +111,7 @@
   text-length: 250;
   text-anchor: middle;
   x: "60%+5";
-  y: "47%+5";
+  y: "48%+5";
   fill: black
 }
 
