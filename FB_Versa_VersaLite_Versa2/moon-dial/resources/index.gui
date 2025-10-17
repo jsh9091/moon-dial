@@ -50,13 +50,11 @@
 
   <image id="moonIcon" />
   <text id="moonPaseLabel" />
+  
+  <text id="dateLabel" />
 
   <text id="timeShadow" opacity="1.0" />
   <text id="timeLabel" />
-  
-  <text id="dayOfWeekLabel" />
-  <text id="monthLabel" />
-  <text id="dayOfMonthLabel" />
 
   <g id="dialgroup" pointer-events="visible" transform="translate(50%, 100%)">
     <image id="dial" href="dial.png" x="$-150" y="$-150" width="300" height="300"/> 

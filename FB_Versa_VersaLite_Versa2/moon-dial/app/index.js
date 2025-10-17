@@ -38,9 +38,7 @@ const moonIcon = document.getElementById("moonIcon");
 const moonPaseLabel = document.getElementById("moonPaseLabel");
 const timeLabel = document.getElementById("timeLabel");
 const timeShadow = document.getElementById("timeShadow");
-const dayOfWeekLabel = document.getElementById("dayOfWeekLabel");
-const monthLabel = document.getElementById("monthLabel");
-const dayOfMonthLabel = document.getElementById("dayOfMonthLabel");
+const dateLabel = document.getElementById("dateLabel");
 const dialgroup = document.getElementById("dialgroup");
 
 // Update the clock every second
@@ -93,10 +91,8 @@ clock.ontick = (evt) => {
     updatePhaseIcon(todayDate);
     updatePhaseLabel(todayDate);
 
+    updateDateField(todayDate);
     timeDisplay(todayDate);
-
-    updateDayField(todayDate);
-    updateDateFields(todayDate);
 
     setDialRotation(todayDate);
 };
@@ -123,14 +119,8 @@ function timeDisplay(todayDate) {
     timeLabel.text = `${hours}` + ":" + `${displayMins}`;
     timeShadow.text = timeLabel.text;
 
-    if (preferences.clockDisplay === "12h") {
-        timeLabel.style.fontSize = 65;
-        timeShadow.style.fontSize = 65;
-    } else {
-        // horizontal space is limited for 24hr time, so reduce font size a little
-        timeLabel.style.fontSize = 58;
-        timeShadow.style.fontSize = 58;
-    }
+    timeLabel.style.fontSize = 68;
+    timeShadow.style.fontSize = timeLabel.style.fontSize;
 }
 
 /**
@@ -214,21 +204,25 @@ function updateBatteryIcon() {
   }
 }
 
+function updateDateField(todayDate) {
+    dateLabel.text = getDayOfWeek(todayDate) + ",  " + getMonth(todayDate) + "  " + todayDate.getDate();
+}
+
 /**
  * Updates day of week displayed. 
  * @param {*} todayDate 
  */
-function updateDayField(todayDate) {
+function getDayOfWeek(todayDate) {
     const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     let index = todayDate.getDay();
-    dayOfWeekLabel.text = dayNames[index].toUpperCase();
+    return dayNames[index].toUpperCase();
 }
 
 /**
  * Updates the month and day of month fields.
  * @param {*} todayDate 
  */
-function updateDateFields(todayDate) {
+function getMonth(todayDate) {
   const monthNames = [
     "Jan",
     "Feb",
@@ -244,11 +238,7 @@ function updateDateFields(todayDate) {
     "Dec",
   ];
 
-  let month = monthNames[todayDate.getMonth()];
-  let dayOfMonth = todayDate.getDate();
-
-  monthLabel.text = month.toUpperCase();
-  dayOfMonthLabel.text = dayOfMonth;
+  return monthNames[todayDate.getMonth()].toUpperCase();
 }
 
 /**
