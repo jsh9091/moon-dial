@@ -64,7 +64,7 @@ const DIAL_ANGLE_DEER_WANING_GIBBOUS = 22;
 const DIAL_ANGLE_DEER_LAST_QUARTER = 52;
 const DIAL_ANGLE_DEER_WANING_CRESENT = 64;
 
-let currentAngle = 0;
+let currentAngle = -1;
 // last phase update fields for dial updates control
 let lastPhaseUpdateDay = 0;
 let lastPhaseUpdateMonth = 0;
@@ -364,10 +364,10 @@ function setDialRotation(date) {
  */
 function calculateDialChangeDeerSide(date) {
     let newAngle = 0;
-
     let newPhase = moon.getLunarPhase(date);
 
-    if (currentMoonPhase === newPhase) {
+    // only increment if the phase is unchanged, and the angle isn't default
+    if (currentMoonPhase === newPhase && currentAngle != -1) {
         // we are in the same lunar phase, do increment calculations
         newAngle = incrementAngleDeerSide(newPhase);
     } else {
@@ -385,10 +385,10 @@ function calculateDialChangeDeerSide(date) {
  */
 function calculateDialChangeShipSide(date) {
     let newAngle = 0;
-
     let newPhase = moon.getLunarPhase(date);
-
-    if (currentMoonPhase === newPhase) {
+    
+    // only increment if the phase is unchanged, and the angle isn't default
+    if (currentMoonPhase === newPhase && currentAngle != -1) {
         // we are in the same lunar phase, do increment calculations
         newAngle = incrementAngleShipSide(newPhase);
     } else {
