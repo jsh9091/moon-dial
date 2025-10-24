@@ -22,24 +22,13 @@
   SOFTWARE. -->
 
 <svg>
-
-  <gradientRect x="0" y="0" width="100%" height="68"
+  <rect id="background" />
+ 
+  <gradientRect x="0" y="0" width="100%" height="300"
     gradient-type="linear"
     gradient-x1="0" gradient-y1="0"
     gradient-x2="0" gradient-y2="100%"
-    gradient-color1="black" gradient-color2="#003161" />
-
-  <gradientRect x="0" y="68" width="100%" height="100"
-    gradient-type="linear"
-    gradient-x1="0" gradient-y1="50%"
-    gradient-x2="0" gradient-y2="100%"
-    gradient-color1="#003161" gradient-color2="#000B58" />
-
-  <gradientRect x="0" y="168" width="100%" height="168"
-    gradient-type="linear"
-    gradient-x1="0" gradient-y1="0"
-    gradient-x2="0" gradient-y2="100%"
-    gradient-color1="#000B58" gradient-color2="black" />
+    gradient-color1="black" gradient-color2="darkblue" />
 
   <text id="stepCountLabel" />
   <image id="stepsIcon" href="steps.png" />
@@ -65,17 +54,6 @@
   <circle cx="29%" cy="343" r="53" fill="black" />
   <circle cx="73%" cy="343" r="53" fill="black" />
   <!--forground circles for moons on dialog to disapear behind-->
-  <mask id="mask">
-    <!--circles to be displayed-->
-    <circle cx="27%" cy="339" r="53" />
-    <circle cx="75%" cy="339" r="53" />
-  </mask>
-    <!--gradient to be masked off by circles-->
-   <svg mask="#mask" width="100%" height="100%">
-      <gradientRect  x="0" y="285" width="100%" height="51"
-        gradient-type="linear"
-        gradient-x1="0" gradient-y1="0"
-        gradient-x2="0" gradient-y2="95%"
-        gradient-color1="#003161" gradient-color2="black" />
-  </svg>
+  <circle cx="27%" cy="339" r="53" fill="black" />
+  <circle cx="75%" cy="339" r="53" fill="black" />
 </svg>
