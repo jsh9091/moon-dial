@@ -24,23 +24,11 @@
 <svg>
   <rect id="background" />
 
-  <gradientRect x="0" y="20" width="100%" height="120"
+  <gradientRect x="0" y="0" width="100%" height="300"
     gradient-type="linear"
     gradient-x1="0" gradient-y1="0"
-    gradient-x2="0" gradient-y2="120"
-    gradient-color1="black" gradient-color2="#003161" />
-
-  <gradientRect x="0" y="140" width="100%" height="80"
-    gradient-type="linear"
-    gradient-x1="0" gradient-y1="0"
-    gradient-x2="0" gradient-y2="80"
-    gradient-color1="#003161" gradient-color2="#000B58" />
-
-  <gradientRect x="0" y="200" width="100%" height="40"
-    gradient-type="linear"
-    gradient-x1="0" gradient-y1="0"
-    gradient-x2="0" gradient-y2="40"
-    gradient-color1="#000B58" gradient-color2="black" />
+    gradient-x2="0" gradient-y2="100%"
+    gradient-color1="black" gradient-color2="darkblue" />
 
   <text id="stepCountLabel" />
   <image id="stepsIcon" href="steps.png" />
@@ -56,22 +44,19 @@
   <text id="timeShadow" opacity="1.0" />
   <text id="timeLabel" />
 
-  <g id="dialgroup" pointer-events="visible" transform="translate(50%, 100%)">
+  <g id="dialgroup" transform="translate(50%, 100%)">
     <image id="dial" href="dial.png" x="$-150" y="$-150" width="300" height="300"/> 
   </g>
 
   <!--forground circles for moons on dialog to disapear behind-->
-  <mask id="mask">
-    <!--circles to be displayed-->
-    <circle cx="27%" cy="303" r="53" />
-    <circle cx="75%" cy="303" r="53" />
-  </mask>
-    <!--gradient to be masked off by circles-->
-   <svg mask="#mask" width="100%" height="100%">
-      <gradientRect  x="0" y="249" width="100%" height="51"
-        gradient-type="linear"
-        gradient-x1="0" gradient-y1="0"
-        gradient-x2="0" gradient-y2="40"
-        gradient-color1="#003161" gradient-color2="black" />
-  </svg>
+  <circle cx="27%" cy="303" r="53" fill="black" />
+  <circle cx="73%" cy="303" r="53" fill="black" />
+
+  <rect x="0" y="290" width="100%" height="10" fill="black" />
+  <g transform="rotate(25)">
+    <rect x="20%-10" y="240" width="100" height="50" fill="black" />
+  </g>
+    <g transform="rotate(-25)">
+    <rect x="30%+10" y="370" width="100" height="50" fill="black" />
+  </g>
 </svg>
