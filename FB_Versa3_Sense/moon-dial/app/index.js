@@ -29,6 +29,7 @@ import * as moon from "./lunarcalculator";
 import { today as activity } from "user-activity";
 import { me as appbit } from "appbit";
 import { battery } from "power";
+import * as fs from "fs";
 
 // Get a handle on the <text> elements
 const stepCountLabel = document.getElementById("stepCountLabel");
@@ -82,6 +83,8 @@ const DialSide = Object.freeze({
 
 let currentDialSide = DialSide.DEER;
 let currentMoonPhase = moon.newMoon;
+
+const fileName = "angle.txt";
 
 clock.ontick = (evt) => {
     // get time information from API
@@ -331,6 +334,7 @@ function updatePhaseLabel(date) {
 function setDialRotation(date) {
     let newAngle = 0;
 
+    // only update dial position once a day
     if (lastPhaseUpdateDay === date.getDate()
         && lastPhaseUpdateMonth === date.getMonth()
         && lastPhaseUpdateYear === date.getUTCFullYear()) {
@@ -366,6 +370,45 @@ function setDialRotation(date) {
     lastPhaseUpdateDay = date.getDate();
     lastPhaseUpdateMonth = date.getMonth(); // DEBUGING NOTE: this field is zero based
     lastPhaseUpdateYear = date.getUTCFullYear();
+    writeData();
+    handleBadPositionAfterReload(date);
+}
+
+/**
+ * Checks that if the position of the dial is a start of phase location, 
+ * but the date is not the first day of a phase, then the function will 
+ * attempt to get value of last location of dial from a text file. 
+ * This circumstance can happen when reloading after changing watchfaces 
+ * on physical device. 
+ */
+function handleBadPositionAfterReload(date) {
+    // if the current angle is a phase start,
+    // AND the date is NOT the start of a phase
+    const invalidStartPosition = isPhaseStartAngle(currentAngle) && !isPhaseStartDate(date);
+
+    // the dial is not at an optimal place
+    if (invalidStartPosition) {
+        // this can happen on a reload after switching watch faces
+        const storedAngle = readData();
+
+        if (storedAngle === -1 || storedAngle === -2 || storedAngle === currentAngle) {
+            // stored value is not usefull, do the incrementation the hard way
+            let calculatedAngle = calculateIncrementedValue(date);
+            if (calculatedAngle > -1) {
+                dialgroup.groupTransform.rotate.angle = calculatedAngle;
+                currentAngle = calculatedAngle;
+            } else {
+                // shouldn't happen, but just in case, fall back on current angle
+                dialgroup.groupTransform.rotate.angle = currentAngle;
+            }
+        } else {
+            // we seem to have a good value 
+            // set the dial to stored value
+            dialgroup.groupTransform.rotate.angle = storedAngle;
+            // update global value
+            currentAngle = storedAngle;
+        }
+    }
 }
 
 /**
@@ -601,4 +644,284 @@ function incrementAngle(nextPhaseAngle) {
     }
 
     return newAngle;
+}
+
+/**
+ * Determines if the given angle is a lunar phase starting angle or not.
+ * @param {*} angle int 
+ * @returns boolean 
+ */
+function isPhaseStartAngle(angle) {
+    let result;
+
+    switch (angle) {
+        case DIAL_ANGLE_SHIP_NEW_MOON:
+        case DIAL_ANGLE_SHIP_WAXING_CRESENT:
+        case DIAL_ANGLE_SHIP_FIRST_QUARTER:
+        case DIAL_ANGLE_SHIP_WAXING_GIBBOUS:
+        case DIAL_ANGLE_SHIP_FULL_MOON:
+        case DIAL_ANGLE_SHIP_WANING_GIBBOUS:
+        case DIAL_ANGLE_SHIP_LAST_QUARTER:
+        case DIAL_ANGLE_SHIP_WANING_CRESENT:
+        case DIAL_ANGLE_DEER_NEW_MOON:
+        case DIAL_ANGLE_DEER_WAXING_CRESENT:
+        case DIAL_ANGLE_DEER_FIRST_QUARTER:
+        case DIAL_ANGLE_DEER_WAXING_GIBBOUS:
+        case DIAL_ANGLE_DEER_FULL_MOON:
+        case DIAL_ANGLE_DEER_WANING_GIBBOUS:
+        case DIAL_ANGLE_DEER_LAST_QUARTER:
+        case DIAL_ANGLE_DEER_WANING_CRESENT:
+            result = true;
+            break;
+        default:
+            result = false;
+    }
+    return result;
+}
+
+/**
+ * Determines if today is the first date of a lunar cycle or not. 
+ * @param {*} todayDate 
+ * @returns boolean
+ */
+function isPhaseStartDate(todayDate) {
+    let time = todayDate.getTime();
+    // subtract number of milliseconds in one day
+    time -= 86400000;
+    // new date for yesterday
+    let yesterday = new Date(time);
+
+    let todayPhase = moon.getLunarPhase(todayDate);
+    let yesterdayPhase = moon.getLunarPhase(yesterday);
+
+    let result;
+    if (todayPhase === yesterdayPhase) {
+        // today is not the start of a lunar phase
+        result = false;
+    } else {
+        // today is the start of a lunar phase
+        result = true;
+    }
+    return result;
+}
+
+/**
+ * Writes current location of dial to text file on device. 
+ */
+function writeData() {
+    const line = currentAngle.toString() + "&" + currentMoonPhase;
+    fs.writeFileSync(fileName, line, "ascii");
+}
+
+/**
+ * Reads previous location of dial from text file on device. 
+ * @returns int 
+ */
+function readData() {
+    let result;
+    let ascii_read = fs.readFileSync(fileName, "ascii");
+    if (ascii_read === null || ascii_read === undefined || ascii_read.length === 0) {
+        // we didn't get any data, report error
+        result = -1;
+    } else {
+        const words = ascii_read.split("&");
+        const angleFromFile = words[0];
+        const phaseFromFile = words[1];
+
+        if (phaseFromFile !== currentMoonPhase) {
+            // the phase from file didn't match and must be stale, report error
+            result = -2;
+        }
+
+        result = Number(angleFromFile);
+    }
+    return result;
+}
+
+function calculateIncrementedValue(date) { // THE HARD WAY
+    let result = -1;
+    const nextPhaseAngle = calculateNextPhaseAngle();
+    const nextPhaseName = calculateNextPhaseName();
+    console.log(moon.getLunarPhase(date));
+    console.log(moon.getLunarPhase());
+    console.log("nextPhaseAngle: " + nextPhaseAngle);
+    console.log("nextPhaseName: " + nextPhaseName);
+    console.log("currentAngle: " + currentAngle);
+
+    if (nextPhaseName.length === 0) {
+        // something went wrong
+        return result;
+    }
+
+    // search out the number of days until next phase
+    const daysToNextPhase = daysUntilNextPhase(date);
+    console.log("daysToNextPhase: " + daysToNextPhase); // TODO 
+    // compare current angel to next phase angle 
+    let gap = 0;    
+    // account for part of dial where dial angle goes back to zero
+    if (currentMoonPhase === moon.fullMoon && currentDialSide === DialSide.DEER) { 
+        /**
+         * Because the current phase has the zero angle in the middle, we must
+         * do some very hard coded numbering. If I had this project to do over again, 
+         * I honestly probably would have most of the dial calculations be hard coded
+         * like this. 
+         */
+        if (daysToNextPhase === 1) {
+            result = 16;
+        } else if (daysToNextPhase === 2) {
+            result = 10;
+        } else if (daysToNextPhase === 3) {
+            result = 4;
+        } else if (daysToNextPhase === 4) {
+            result = 358;
+        } else  {
+            result = 354;
+        }
+    } else {
+        // find gap between numbers
+        gap = nextPhaseAngle - currentAngle;
+        console.log("nextPhaseAngle: " + nextPhaseAngle);
+        console.log("currentAngle: " + currentAngle);
+        console.log("gap: " + gap);
+        // calculate a rounded down value to return
+        //result = (Math.floor(gap / daysToNextPhase) - 1) + currentAngle;
+        result = nextPhaseAngle - ((daysToNextPhase * 7) - 1);
+        console.log("result: " + result);
+
+    }
+    return result;
+}
+
+/**
+ * Returns the expected angle value for the next lunar phase. 
+ * @returns int
+ */
+function calculateNextPhaseAngle() {
+    let result = -1;
+
+    if (currentDialSide === DialSide.DEER) {
+        switch (currentMoonPhase) {
+            case moon.newMoon:
+                result = DIAL_ANGLE_DEER_WAXING_CRESENT;
+                break;
+            case moon.waxingCrescent:
+                result = DIAL_ANGLE_DEER_FIRST_QUARTER;
+                break;
+            case moon.firstQuarter:
+                result = DIAL_ANGLE_DEER_WAXING_GIBBOUS;
+                break;
+            case moon.waxingGibbous:
+                result = DIAL_ANGLE_DEER_FULL_MOON;
+                break;
+            case moon.fullMoon:
+                result = DIAL_ANGLE_DEER_WANING_GIBBOUS;
+                break;
+            case moon.waningGibbous:
+                result = DIAL_ANGLE_DEER_LAST_QUARTER;
+                break;
+            case moon.lastQuarter:
+                result = DIAL_ANGLE_DEER_WANING_CRESENT;
+                break;
+            case moon.waningCrescent:
+                // next phase is on other side of dial
+                result = DIAL_ANGLE_SHIP_NEW_MOON;
+                break;
+        }
+
+    } else if (currentDialSide === DialSide.SHIP) {
+        switch (currentMoonPhase) {
+            case moon.newMoon:
+                result = DIAL_ANGLE_SHIP_WAXING_CRESENT;
+                break;
+            case moon.waxingCrescent:
+                result = DIAL_ANGLE_SHIP_FIRST_QUARTER;
+                break;
+            case moon.firstQuarter:
+                result = DIAL_ANGLE_SHIP_WAXING_GIBBOUS;
+                break;
+            case moon.waxingGibbous:
+                result = DIAL_ANGLE_SHIP_FULL_MOON;
+                break;
+            case moon.fullMoon:
+                result = DIAL_ANGLE_SHIP_WANING_GIBBOUS;
+                break;
+            case moon.waningGibbous:
+                result = DIAL_ANGLE_SHIP_LAST_QUARTER;
+                break;
+            case moon.lastQuarter:
+                result = DIAL_ANGLE_SHIP_WANING_CRESENT;
+                break;
+            case moon.waningCrescent:
+                // next phase is on other side of dial
+                result = DIAL_ANGLE_DEER_NEW_MOON;
+                break;
+        }
+    }
+    return result;
+}
+
+/**
+ * Returns string of the name of the next lunar phase.
+ * @returns string
+ */
+function calculateNextPhaseName() {
+    let result = "";
+    switch (currentMoonPhase) {
+            case moon.newMoon:
+                result = moon.waxingCrescent;
+                break;
+            case moon.waxingCrescent:
+                result = moon.firstQuarter;
+                break;
+            case moon.firstQuarter:
+                result = moon.waxingGibbous;
+                break;
+            case moon.waxingGibbous:
+                result = moon.fullMoon;
+                break;
+            case moon.fullMoon:
+                result = moon.waningGibbous;
+                break;
+            case moon.waningGibbous:
+                result = moon.lastQuarter;
+                break;
+            case moon.lastQuarter:
+                result = moon.waningCrescent;
+                break;
+            case moon.waningCrescent:
+                result = moon.newMoon;
+                break;
+    }
+    return result;
+}
+
+/**
+ * Calculates the number of days until start of the next lunar phase. 
+ * @param {*} date 
+ * @returns int
+ */
+function daysUntilNextPhase(date) {
+    let days = 1;
+    let time = date.getTime();
+    const todayPhase = moon.getLunarPhase(date);
+
+    let foundNextPhase = false;
+    while (!foundNextPhase) {
+        // add number of milliseconds in one day
+        time += 86400000;
+        // new date for another day
+        const nextDay = new Date(time);
+        // get the phase for the next day
+        const nextDayPhase = moon.getLunarPhase(nextDay);
+
+        // if the current lunar phase continues 
+        if (nextDayPhase === todayPhase) {
+            // add one to result data
+            days += 1;
+        } else {
+            // we found the start of the next phase
+            foundNextPhase = true;
+        }
+    }
+    return days;
 }

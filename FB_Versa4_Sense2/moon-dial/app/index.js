@@ -29,6 +29,7 @@ import * as moon from "./lunarcalculator";
 import { today as activity } from "user-activity";
 import { me as appbit } from "appbit";
 import { battery } from "power";
+import * as fs from "fs";
 
 // Get a handle on the <text> elements
 const stepCountLabel = document.getElementById("stepCountLabel");
@@ -82,6 +83,8 @@ const DialSide = Object.freeze({
 
 let currentDialSide = DialSide.DEER;
 let currentMoonPhase = moon.newMoon;
+
+const fileName = "angle.txt";
 
 clock.ontick = (evt) => {
     // get time information from API
@@ -331,6 +334,7 @@ function updatePhaseLabel(date) {
 function setDialRotation(date) {
     let newAngle = 0;
 
+    // only update dial position once a day
     if (lastPhaseUpdateDay === date.getDate()
         && lastPhaseUpdateMonth === date.getMonth()
         && lastPhaseUpdateYear === date.getUTCFullYear()) {
@@ -366,6 +370,34 @@ function setDialRotation(date) {
     lastPhaseUpdateDay = date.getDate();
     lastPhaseUpdateMonth = date.getMonth(); // DEBUGING NOTE: this field is zero based
     lastPhaseUpdateYear = date.getUTCFullYear();
+    handleBadPositionAfterReload(date);
+    writeData();
+}
+
+/**
+ * Checks that if the position of the dial is a start of phase location, 
+ * but the date is not the first day of a phase, then the function will 
+ * attempt to get value of last location of dial from a text file. 
+ * This circumstance can happen when reloading after changing watchfaces 
+ * on physical device. 
+ */
+function handleBadPositionAfterReload(date) {
+    // if the current angle is a phase start,
+    // AND the date is NOT the start of a phase
+    const invalidStartPosition = isPhaseStartAngle(currentAngle) && !isPhaseStartDate(date);
+
+    // the dial is not at an optimal place
+    if (invalidStartPosition) {
+        // this can happen on a reload after switching watch faces
+        const storedAngle = readData();
+        // if we have a good value from text file
+        if (storedAngle > -1) {
+            // set the dial to stored value
+            dialgroup.groupTransform.rotate.angle = storedAngle;
+            // update global value
+            currentAngle = storedAngle;
+        }
+    }
 }
 
 /**
@@ -601,4 +633,87 @@ function incrementAngle(nextPhaseAngle) {
     }
 
     return newAngle;
+}
+
+/**
+ * Determines if the given angle is a lunar phase starting angle or not.
+ * @param {*} angle int 
+ * @returns boolean 
+ */
+function isPhaseStartAngle(angle) {
+    let result;
+
+    switch (angle) {
+        case DIAL_ANGLE_SHIP_NEW_MOON:
+        case DIAL_ANGLE_SHIP_WAXING_CRESENT:
+        case DIAL_ANGLE_SHIP_FIRST_QUARTER:
+        case DIAL_ANGLE_SHIP_WAXING_GIBBOUS:
+        case DIAL_ANGLE_SHIP_FULL_MOON:
+        case DIAL_ANGLE_SHIP_WANING_GIBBOUS:
+        case DIAL_ANGLE_SHIP_LAST_QUARTER:
+        case DIAL_ANGLE_SHIP_WANING_CRESENT:
+        case DIAL_ANGLE_DEER_NEW_MOON:
+        case DIAL_ANGLE_DEER_WAXING_CRESENT:
+        case DIAL_ANGLE_DEER_FIRST_QUARTER:
+        case DIAL_ANGLE_DEER_WAXING_GIBBOUS:
+        case DIAL_ANGLE_DEER_FULL_MOON:
+        case DIAL_ANGLE_DEER_WANING_GIBBOUS:
+        case DIAL_ANGLE_DEER_LAST_QUARTER:
+        case DIAL_ANGLE_DEER_WANING_CRESENT:
+            result = true;
+            break;
+        default:
+            result = false;
+    }
+    return result;
+}
+
+/**
+ * Determines if today is the first date of a lunar cycle or not. 
+ * @param {*} todayDate 
+ * @returns boolean
+ */
+function isPhaseStartDate(todayDate) {
+    let time = todayDate.getTime();
+    // subtract number of milliseconds in one day
+    time -= 86400000;
+    // new date for yesterday
+    let yesterday = new Date(time);
+
+    let todayPhase = moon.getLunarPhase(todayDate);
+    let yesterdayPhase = moon.getLunarPhase(yesterday);
+
+    let result;
+    if (todayPhase === yesterdayPhase) {
+        // today is not the start of a lunar phase
+        result = false;
+    } else {
+        // today is the start of a lunar phase
+        result = true;
+    }
+    return result;
+}
+
+/**
+ * Writes current location of dial to text file on device. 
+ */
+function writeData() {
+    // TODO also store current lunar phase for data read validation 
+    fs.writeFileSync(fileName, currentAngle.toString(), "ascii");
+}
+
+/**
+ * Reads previous location of dial from text file on device. 
+ * @returns int 
+ */
+function readData() {
+    let result;
+    let ascii_read = fs.readFileSync(fileName, "ascii");
+    if (ascii_read === null || ascii_read === undefined || ascii_read.length === 0) {
+        result = -1;
+    } else {
+        result = Number(ascii_read);
+    }
+    // TODO return -2 if lunar phase is incorrect 
+    return result;
 }
