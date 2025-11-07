@@ -110,7 +110,7 @@
   text-length: 10;
   text-anchor: middle;
   x: "88%";
-  y: "33%";
+  y: "111";
   fill: #D4F1F4
 }
 
@@ -120,17 +120,17 @@
   text-length: 10;
   text-anchor: middle;
   x: "88%";
-  y: "40%";
+  y: "134";
   fill: #D4F1F4
 }
 
 #dayOfMonthLabel {
-  font-size: 20;
+  font-size: 23;
   font-family: FBNucleon-Bold;
   text-length: 10;
   text-anchor: middle;
   x: "88%";
-  y: "47%";
+  y: "159";
   fill: #D4F1F4
 }
 
