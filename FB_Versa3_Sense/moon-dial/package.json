@@ -8,7 +8,7 @@
     "@fitbit/sdk-cli": "^1.7.3"
   },
   "fitbit": {
-    "appUUID": "cfd9e97a-91a1-45ee-b13d-edc692b1df5c",
+    "appUUID": "55aed9c7-ed83-46d0-b959-adea49293a00",
     "appType": "clockface",
     "appDisplayName": "Moon Dial",
     "iconFile": "resources/icon.png",
