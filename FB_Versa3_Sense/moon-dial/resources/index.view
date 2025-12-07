@@ -51,8 +51,8 @@
   </g>
 
   <!--drop shawdow for circles that moon disapears behind on dial-->
-  <circle cx="29%" cy="343" r="53" fill="black" />
-  <circle cx="73%" cy="343" r="53" fill="black" />
+  <circle id="leftCircleShadow" cx="94" cy="343" r="53" fill="black" />
+  <circle id="rightCircleShadow" cx="248" cy="343" r="53" fill="black" />
   <!--forground circles for moons on dialog to disapear behind-->
   <circle cx="27%" cy="339" r="53" fill="black" />
   <circle cx="75%" cy="339" r="53" fill="black" />

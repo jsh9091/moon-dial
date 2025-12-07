@@ -43,6 +43,8 @@ const dayOfWeekLabel = document.getElementById("dayOfWeekLabel");
 const monthLabel = document.getElementById("monthLabel");
 const dayOfMonthLabel = document.getElementById("dayOfMonthLabel");
 const dialgroup = document.getElementById("dialgroup");
+const leftCircleShadow = document.getElementById("leftCircleShadow");
+const rightCircleShadow = document.getElementById("rightCircleShadow");
 
 // Update the clock every second
 clock.granularity = "minutes";
@@ -100,6 +102,7 @@ clock.ontick = (evt) => {
     updateDateFields(todayDate);
 
     updateDialRotation(todayDate);
+    updateDropShadows();
 };
 
 /**
@@ -613,7 +616,6 @@ function writeData() {
  * Reads the current dial side from a text file.
  */
 function readData() {
-    console.log(fs.existsSync(fileName));
     // if the file does not yet exist
     if (!fs.existsSync(fileName)) {
         // then stop
@@ -628,8 +630,35 @@ function readData() {
     } else {
         result = ascii_read;
     }
-
+    // if we got good data, then update the current side global 
     if (result === DialSide.DEER || result === DialSide.SHIP) {
         currentDialSide = result;
     } 
+}
+
+/**
+ * Updates the circle drop shadow circles to better hide the moon art during new moons. 
+ */
+function updateDropShadows() {
+    if (currentMoonPhase === moon.newMoon) {
+
+        if (currentDialSide == DialSide.DEER) {
+            leftCircleShadow.cx = 82;
+            leftCircleShadow.cy = 340;
+            rightCircleShadow.cx = 243;
+            rightCircleShadow.cy = 338;
+        } else if (currentDialSide == DialSide.SHIP) {
+            leftCircleShadow.cx = 94;
+            leftCircleShadow.cy = 335;
+            rightCircleShadow.cx = 249;
+            rightCircleShadow.cy = 335;
+        }
+
+    } else {
+        // keep/restore default locations 
+        leftCircleShadow.cx = 94;
+        leftCircleShadow.cy = 343;
+        rightCircleShadow.cx = 248;
+        rightCircleShadow.cy = 343;
+    }
 }
