@@ -29,6 +29,7 @@ import * as moon from "./lunarcalculator";
 import { today as activity } from "user-activity";
 import { me as appbit } from "appbit";
 import { battery } from "power";
+import * as fs from "fs";
 
 // Get a handle on the <text> elements
 const stepCountLabel = document.getElementById("stepCountLabel");
@@ -76,6 +77,8 @@ const DialSide = Object.freeze({
 
 let currentDialSide = DialSide.DEER;
 let currentMoonPhase = moon.newMoon;
+
+const fileName = "dial-side.txt";
 
 /**
  * Main clock tick update code. 
@@ -330,6 +333,9 @@ function updateDialRotation(todayDate) {
     let newAngle = 0;
     const phase = moon.getLunarPhase(todayDate);
 
+    // update current dial side from file
+    readData();
+
     // check if we need to update the current side
     if (currentMoonPhase === moon.waningCrescent && phase === moon.newMoon) {
         // do side update
@@ -363,6 +369,9 @@ function updateDialRotation(todayDate) {
     dialgroup.groupTransform.rotate.angle = newAngle;
     // update global
     currentMoonPhase = phase;
+
+    // write dial side to file
+    writeData();
 }
 
 /**
@@ -590,4 +599,37 @@ function daysUntilNextPhase(date) {
         }
     }
     return days;
+}
+
+/**
+ * Writes the current dial side to a text file.
+ */
+function writeData() {
+    const line = currentDialSide;
+    fs.writeFileSync(fileName, line, "ascii");
+}
+
+/**
+ * Reads the current dial side from a text file.
+ */
+function readData() {
+    console.log(fs.existsSync(fileName));
+    // if the file does not yet exist
+    if (!fs.existsSync(fileName)) {
+        // then stop
+        return;
+    }
+
+    let result;
+    const ascii_read = fs.readFileSync(fileName, "ascii");
+    if (ascii_read === null || ascii_read === undefined || ascii_read.length === 0) {
+        // we didn't get any data, keep current value
+        result = "fail";
+    } else {
+        result = ascii_read;
+    }
+
+    if (result === DialSide.DEER || result === DialSide.SHIP) {
+        currentDialSide = result;
+    } 
 }
