@@ -10,3 +10,6 @@ Note: This clockface is pending review to be published to the Fitbit app store.
 [Fitbit App Gallery listing](https://gallery.fitbit.com/details/55aed9c7-ed83-46d0-b959-adea49293a00?key=2cf157d3-024a-4f39-809b-0a329e97a378) 
 
 ![screenshot of watch-face](Screenshot.png)
+
+Known Issue: 
+- There is a minor issue that will cause inconsistent behaving in the position of the moon dial. If the user switches the clock face to Moon Dial from another clock face during a new moon phase, with the dear rotating down and the ship side rotating up, the clock face will not correctly update and will display the moon dial art at the beginning of the dear side, rather than the ship side. This issue will not occur if the clock face  is running from waning crescent  to waxing crescent on this side of the dial rotation. 
